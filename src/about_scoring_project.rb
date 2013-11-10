@@ -31,27 +31,77 @@ require File.expand_path(File.dirname(__FILE__) + '/neo')
 
 def score(dice)
   # You need to write this method
-  #--
-  result = 0
-  (1..6).each do |face|
-    count = dice.select { |n| n == face }.size
-    while count > 0
-      if count >= 3
-        result += (face == 1) ? 1000 : 100 * face
-        count -= 3
-      elsif face == 5
-        result += count * 50
-        count = 0
-      elsif face == 1
-        result += count * 100
-        count = 0
-      else
-        count = 0
-      end
+  score = 0
+  sorted_dice = [[],[],[],[],[],[]]
+  dice.each do |value|
+    if value == 1
+      sorted_dice[0] << 1
+    elsif value == 2
+      sorted_dice[1] << 2
+    elsif value == 3
+      sorted_dice[2] << 3
+    elsif value == 4
+      sorted_dice[3] << 4
+    elsif value == 5
+      sorted_dice[4] << 5
+    elsif value == 6
+      sorted_dice[5] << 6
     end
   end
-  result
-  #++
+
+  if sorted_dice[0] == [1, 1, 1]
+    score += 1000
+  end
+
+  if sorted_dice[1] == [2, 2, 2]
+    score += 200
+  end
+
+  if sorted_dice[2] == [3, 3, 3]
+    score += 300
+  end
+
+  if sorted_dice[3] == [4, 4, 4]
+    score += 400
+  end
+
+  if sorted_dice[4] == [5, 5, 5]
+    score += 500
+  end
+
+  if sorted_dice[5] == [6, 6, 6]
+    score += 600
+  end
+
+  if sorted_dice[0] == [1]
+    score += 100
+  end
+
+  if sorted_dice[0] == [1, 1]
+    score += 200
+  end
+
+  if sorted_dice[0] == [1, 1, 1, 1]
+    score += 1100
+  end
+
+  if sorted_dice[0] == [1, 1, 1, 1, 1]
+    score += 1200
+  end
+
+  if sorted_dice[4] == [5]
+    score += 50
+  end
+  
+  if sorted_dice[4] == [5, 5]
+    score += 100
+  end
+
+  if sorted_dice[4] == [5, 5, 5, 5]
+    score += 550
+  end
+
+  return score
 end
 
 class AboutScoringProject < Neo::Koan
